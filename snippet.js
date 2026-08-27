@@ -23,7 +23,9 @@ export default {
         return new Response("Forbidden", { status: 403 });
       }
 
-      // 3. 校验通过，重写目标域名并透传（自动支持 WebSocket）
+      // 3. 校验通过，去掉代理参数后重写目标域名并透传（自动支持 WebSocket）
+      url.searchParams.delete('d');
+      url.searchParams.delete('t');
       url.hostname = targetDomain;
       return await fetch(url, request);
 
